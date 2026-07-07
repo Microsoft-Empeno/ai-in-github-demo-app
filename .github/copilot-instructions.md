@@ -61,6 +61,16 @@ the Coding Agent) automatically follows them when generating or reviewing code h
 - Use `Assert` (not FluentAssertions unless it's added as a dependency).
 - When you add or change a function or repository method, add matching tests.
 
+## Source control workflow
+
+- The `main` branch is **protected**: never commit or push directly to `main`.
+- Make all changes on a **feature branch** (e.g. `feature/short-description`) created
+  off the latest `main`.
+- Finish work by opening a **pull request** targeting `main`; do not merge locally.
+- Keep pull requests focused and let Copilot Code Review run; resolve review
+  conversations before merging.
+- Prefer **squash and merge**; the feature branch is deleted after merge.
+
 ## What to avoid
 
 - Don't add a database, ORM, or external persistence unless explicitly asked.

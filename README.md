@@ -159,7 +159,18 @@ This repository is used to demonstrate the following GitHub AI capabilities:
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature-name`
-3. Commit your changes and open a pull request
-4. GitHub Copilot will automatically review your PR
+All changes go through **feature branches and pull requests** — the `main` branch is
+protected and cannot be pushed to directly.
+
+1. Create a feature branch off `main`: `git checkout -b feature/your-feature-name`
+2. Commit your work to that branch and push it: `git push -u origin feature/your-feature-name`
+3. Open a pull request targeting `main`
+4. GitHub Copilot automatically reviews the PR; resolve any review conversations
+5. Once checks pass, use **Squash and merge**. The branch is deleted automatically and
+   the merge to `main` triggers the deploy pipeline
+
+### Branch protection on `main`
+
+- Direct pushes to `main` are blocked — a pull request is required
+- Force pushes and branch deletion are disabled
+- Review conversations must be resolved before merging
