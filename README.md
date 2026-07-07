@@ -124,7 +124,7 @@ infra/
 ## Deployment (Azure)
 
 Infrastructure and app deploy together from a single GitHub Actions pipeline
-([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) on every push to `master`
+([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) on every push to `main`
 (or via manual `workflow_dispatch`). The pipeline:
 
 1. **Authenticates to Azure with OIDC** — no stored credentials, only the
