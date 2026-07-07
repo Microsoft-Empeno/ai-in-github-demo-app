@@ -26,45 +26,55 @@ jobs:
 
       - name: Deploy infrastructure (Bicep)
         id: infra
-        uses: azure/cli@v2
+        run: |
+          outputs=$(az deployment sub create \
+            --name "taskmgr-$(date +%Y%m%d%H%M%S)" \
+            --location westeurope \
+            --template-file infra/main.bicep \
+            --parameters infra/main.bicepparam \
+            --query properties.outputs -o json)
+          echo "swaName=$(echo "$outputs" | jq -r '.staticWebAppName.value')" >> "$GITHUB_OUTPUT"
+          echo "rgName=$(echo "$outputs" | jq -r '.resourceGroupName.value')" >> "$GITHUB_OUTPUT"
+          echo "swaHost=$(echo "$outputs" | jq -r '.staticWebAppHostname.value')" >> "$GITHUB_OUTPUT"
+          echo "funcName=$(echo "$outputs" | jq -r '.functionAppName.value')" >> "$GITHUB_OUTPUT"
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          azcliversion: latest
-          inlineScript: |
-            outputs=$(az deployment sub create \
-              --name "taskmgr-$(date +%Y%m%d%H%M%S)" \
-              --location westeurope \
-              --template-file infra/main.bicep \
-              --parameters infra/main.bicepparam \
-              --query properties.outputs -o json)
-            echo "swaName=$(echo "$outputs" | jq -r '.staticWebAppName.value')" >> "$GITHUB_OUTPUT"
-            echo "rgName=$(echo "$outputs" | jq -r '.resourceGroupName.value')" >> "$GITHUB_OUTPUT"
-            echo "swaHost=$(echo "$outputs" | jq -r '.staticWebAppHostname.value')" >> "$GITHUB_OUTPUT"
+          dotnet-version: '10.0.x'
+
+      - name: Publish Function App
+        run: dotnet publish src/TaskManager.Api --configuration Release --output ./api_output
+
+      - name: Deploy Function App
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ steps.infra.outputs.funcName }}
+          package: ./api_output
 
       - name: Get Static Web App deployment token
         id: token
-        uses: azure/cli@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
-            token=$(az staticwebapp secrets list \
-              --name "${{ steps.infra.outputs.swaName }}" \
-              --resource-group "${{ steps.infra.outputs.rgName }}" \
-              --query "properties.apiKey" -o tsv)
-            echo "::add-mask::$token"
-            echo "token=$token" >> "$GITHUB_OUTPUT"
+        run: |
+          token=$(az staticwebapp secrets list \
+            --name "${{ steps.infra.outputs.swaName }}" \
+            --resource-group "${{ steps.infra.outputs.rgName }}" \
+            --query "properties.apiKey" -o tsv)
+          echo "::add-mask::$token"
+          echo "token=$token" >> "$GITHUB_OUTPUT"
 
-      - name: Deploy front end + API to Static Web Apps
+      - name: Deploy front end to Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ steps.token.outputs.token }}
           action: "upload"
           app_location: "frontend"
-          api_location: "src/TaskManager.Api"
+          skip_app_build: true
+          skip_api_build: true
           output_location: ""
 
       - name: Summary
         run: |
           echo "### Deployed :rocket:" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Resource group: \`${{ steps.infra.outputs.rgName }}\`" >> "$GITHUB_STEP_SUMMARY"
           echo "- Static Web App: \`${{ steps.infra.outputs.swaName }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Function App: \`${{ steps.infra.outputs.funcName }}\`" >> "$GITHUB_STEP_SUMMARY"
           echo "- URL: https://${{ steps.infra.outputs.swaHost }}" >> "$GITHUB_STEP_SUMMARY"

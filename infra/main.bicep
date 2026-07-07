@@ -26,4 +26,5 @@ module resources 'resources.bicep' = {
 output resourceGroupName string = rg.name
 output staticWebAppName string = resources.outputs.staticWebAppName
 output staticWebAppHostname string = resources.outputs.staticWebAppHostname
+output functionAppName string = resources.outputs.functionAppName
 output appInsightsName string = resources.outputs.appInsightsName
