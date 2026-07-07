@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI in Action</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <span class="nav__brand">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4.5 7.75a.75.75 0 011.28-.53l1.47 1.47 3.47-3.47a.75.75 0 111.06 1.06l-4 4a.75.75 0 01-1.06 0l-2-2a.75.75 0 01-.22-.53z" />
+        </svg>
+        Task Manager API
+      </span>
+      <div class="nav__links">
+        <a class="nav__link" href="/index.html">Tasks</a>
+        <a class="nav__link" href="/ai-features.html">GitHub AI Features</a>
+        <a class="nav__link is-active" href="/ai-in-action.html">AI in Action</a>
+        <a class="nav__link" href="/demo-script.html">Demo Script</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <header class="hero">
+        <h1>AI in Action</h1>
+        <p>
+          Some of the coolest GitHub AI features — shown through real moments from
+          building and running <strong>this very project</strong>.
+        </p>
+      </header>
+
+      <div class="feature-grid">
+        <article class="feature">
+          <div class="feature__icon">🤖</div>
+          <h3>Copilot Coding Agent</h3>
+          <p>Assign an issue and Copilot spins up its own branch, writes the code, and opens a pull request — all on its own.</p>
+          <span class="feature__tag">Issue → PR</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">🔍</div>
+          <h3>Copilot Code Review</h3>
+          <p>Every pull request here is reviewed automatically, with an overview and concrete, suggested changes before a human even looks.</p>
+          <span class="feature__tag">On every PR</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">🛠️</div>
+          <h3>Agent Mode</h3>
+          <p>Give a goal and Copilot plans, edits across multiple files, runs commands, and fixes its own errors iteratively.</p>
+          <span class="feature__tag">Agentic</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">🛡️</div>
+          <h3>CodeQL + Autofix</h3>
+          <p>Security scanning finds vulnerabilities and Copilot proposes a ready-to-apply fix right inside the pull request.</p>
+          <span class="feature__tag">Advanced Security</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">📦</div>
+          <h3>Dependabot</h3>
+          <p>Dependency bumps arrive as pull requests that must pass CI — so a breaking upgrade never sneaks into <code>main</code>.</p>
+          <span class="feature__tag">Supply chain</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">📁</div>
+          <h3>Custom Instructions</h3>
+          <p>A committed <code>copilot-instructions.md</code> steers every Copilot request to this repo's conventions and branch/PR workflow.</p>
+          <span class="feature__tag">In this repo</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">💬</div>
+          <h3>Copilot Chat</h3>
+          <p>Ask questions about the codebase, generate tests, and refactor — in plain language, in the editor or on github.com.</p>
+          <span class="feature__tag">Editor &amp; web</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">✍️</div>
+          <h3>Code Completions</h3>
+          <p>Real-time, context-aware suggestions as you type — from a single line to an entire function.</p>
+          <span class="feature__tag">In the editor</span>
+        </article>
+      </div>
+
+      <h2 class="section-title">Seen in this repository</h2>
+      <p class="section-sub">Real examples from building the Task Manager API.</p>
+      <section class="card">
+        <ul>
+          <li>Pull requests here were <strong>reviewed by Copilot automatically</strong> thanks to a repository code-review ruleset.</li>
+          <li>A <strong>Dependabot</strong> update was squash-merged, which then had to pass the required <code>Build &amp; Test</code> check.</li>
+          <li>Branch protection requires a <strong>pull request</strong> for every change — no direct pushes to <code>main</code>.</li>
+          <li>This page itself was added on a feature branch and merged through a pull request.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
