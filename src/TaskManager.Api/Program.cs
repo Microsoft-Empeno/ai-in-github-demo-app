@@ -1,14 +1,17 @@
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using TaskManager.Api.Data;
-using TaskManager.Api.Endpoints;
 
-var builder = WebApplication.CreateBuilder(args);
+var host = new HostBuilder()
+    .ConfigureFunctionsWebApplication()
+    .ConfigureServices(services =>
+    {
+        services.AddApplicationInsightsTelemetryWorkerService();
+        services.ConfigureFunctionsApplicationInsights();
 
-builder.Services.AddSingleton<TaskRepository>();
+        services.AddSingleton<TaskRepository>();
+    })
+    .Build();
 
-var app = builder.Build();
-
-app.UseHttpsRedirection();
-
-app.MapTaskEndpoints();
-
-app.Run();
+host.Run();

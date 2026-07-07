@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub AI Features</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <span class="nav__brand">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4.5 7.75a.75.75 0 011.28-.53l1.47 1.47 3.47-3.47a.75.75 0 111.06 1.06l-4 4a.75.75 0 01-1.06 0l-2-2a.75.75 0 01-.22-.53z" />
+        </svg>
+        Task Manager API
+      </span>
+      <div class="nav__links">
+        <a class="nav__link" href="/index.html">Tasks</a>
+        <a class="nav__link is-active" href="/ai-features.html">GitHub AI Features</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <header class="hero">
+        <h1>AI-Powered Development with GitHub</h1>
+        <p>
+          Every part of this project — the API, the tests, the CI pipeline, and this
+          very front end — was built with GitHub's AI features. Here's what's on offer.
+        </p>
+      </header>
+
+      <div class="feature-grid">
+        <article class="feature">
+          <div class="feature__icon">✍️</div>
+          <h3>Copilot Code Completions</h3>
+          <p>Real-time, context-aware code suggestions as you type — from single lines to whole functions.</p>
+          <span class="feature__tag">In the editor</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">💬</div>
+          <h3>Copilot Chat</h3>
+          <p>Ask questions about the codebase, get explanations, generate tests, and refactor — in natural language.</p>
+          <span class="feature__tag">Editor &amp; github.com</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">🛠️</div>
+          <h3>Copilot Agent Mode</h3>
+          <p>Give a goal and Copilot plans, edits across multiple files, runs commands, and fixes errors iteratively.</p>
+          <span class="feature__tag">Agentic</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">🤖</div>
+          <h3>Copilot Coding Agent</h3>
+          <p>Assign an issue to Copilot and it opens a pull request with the implementation — fully autonomous.</p>
+          <span class="feature__tag">Issue → PR</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">🔍</div>
+          <h3>Copilot Code Review</h3>
+          <p>Automated, AI-driven review on every pull request with concrete, suggested code changes.</p>
+          <span class="feature__tag">Pull requests</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">🛡️</div>
+          <h3>CodeQL + Copilot Autofix</h3>
+          <p>AI-suggested fixes for security vulnerabilities found by code scanning, right inside the PR.</p>
+          <span class="feature__tag">Advanced Security</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">🔑</div>
+          <h3>Secret Scanning</h3>
+          <p>Detects leaked credentials and blocks pushes containing secrets before they reach the repo.</p>
+          <span class="feature__tag">Advanced Security</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">📦</div>
+          <h3>Dependabot</h3>
+          <p>Automated dependency update pull requests, with AI-assisted triage and grouping.</p>
+          <span class="feature__tag">Supply chain</span>
+        </article>
+
+        <article class="feature">
+          <div class="feature__icon">📁</div>
+          <h3>Repository Custom Instructions</h3>
+          <p>A committed <code>copilot-instructions.md</code> that steers every Copilot request to your team's conventions.</p>
+          <span class="feature__tag">In this repo</span>
+        </article>
+      </div>
+
+      <h2 class="section-title">Moving from GitLab to GitHub</h2>
+      <p class="section-sub">How familiar GitLab capabilities map onto GitHub.</p>
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>GitLab</th>
+            <th>GitHub equivalent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GitLab CI/CD (<code>.gitlab-ci.yml</code>)</td>
+            <td>GitHub Actions (<code>.github/workflows/</code>)</td>
+          </tr>
+          <tr>
+            <td>GitLab Duo Code Suggestions</td>
+            <td>GitHub Copilot completions</td>
+          </tr>
+          <tr>
+            <td>GitLab Duo Chat</td>
+            <td>Copilot Chat</td>
+          </tr>
+          <tr>
+            <td>Duo vulnerability explanation</td>
+            <td>Copilot Autofix + CodeQL</td>
+          </tr>
+          <tr>
+            <td>Manual merge request review</td>
+            <td>Copilot Code Review</td>
+          </tr>
+          <tr>
+            <td><em>No direct equivalent</em></td>
+            <td>Copilot Coding Agent (issue → PR autonomously)</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>
