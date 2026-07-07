@@ -46,6 +46,9 @@ jobs:
       - name: Publish Function App
         run: dotnet publish src/TaskManager.Api --configuration Release --output ./api_output
 
+      - name: Wait for storage role assignment to propagate
+        run: sleep 90
+
       - name: Deploy Function App
         uses: Azure/functions-action@v1
         with:

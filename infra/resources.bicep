@@ -46,6 +46,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   properties: {
     minimumTlsVersion: 'TLS1_2'
     allowBlobPublicAccess: false
+    allowSharedKeyAccess: false
   }
 }
 
@@ -58,8 +59,6 @@ resource deploymentContainer 'Microsoft.Storage/storageAccounts/blobServices/con
   parent: blobServices
   name: 'deployments'
 }
-
-var storageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storage.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storage.listKeys().keys[0].value}'
 
 resource plan 'Microsoft.Web/serverfarms@2024-04-01' = {
   name: planName
@@ -78,6 +77,9 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
   name: functionAppName
   location: location
   kind: 'functionapp,linux'
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     serverFarmId: plan.id
     httpsOnly: true
@@ -87,8 +89,7 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
           type: 'blobContainer'
           value: '${storage.properties.primaryEndpoints.blob}${deploymentContainer.name}'
           authentication: {
-            type: 'StorageAccountConnectionString'
-            storageAccountConnectionStringName: 'DEPLOYMENT_STORAGE_CONNECTION_STRING'
+            type: 'SystemAssignedIdentity'
           }
         }
       }
@@ -104,12 +105,8 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
     siteConfig: {
       appSettings: [
         {
-          name: 'AzureWebJobsStorage'
-          value: storageConnectionString
-        }
-        {
-          name: 'DEPLOYMENT_STORAGE_CONNECTION_STRING'
-          value: storageConnectionString
+          name: 'AzureWebJobsStorage__accountName'
+          value: storage.name
         }
         {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
@@ -117,6 +114,18 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
         }
       ]
     }
+  }
+}
+
+var storageBlobDataOwnerRoleId = 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
+
+resource functionAppStorageAccess 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(storage.id, functionApp.id, storageBlobDataOwnerRoleId)
+  scope: storage
+  properties: {
+    principalId: functionApp.identity.principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', storageBlobDataOwnerRoleId)
+    principalType: 'ServicePrincipal'
   }
 }
 
