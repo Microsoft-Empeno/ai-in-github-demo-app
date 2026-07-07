@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
@@ -35,3 +35,13 @@ jobs:
         with:
           name: coverage-report
           path: '**/coverage.cobertura.xml'
+
+  lint-bicep:
+    name: Lint Bicep
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint Bicep templates
+        run: az bicep build --file infra/main.bicep --stdout > /dev/null
