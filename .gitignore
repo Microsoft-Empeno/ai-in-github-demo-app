@@ -39,7 +39,7 @@ packages/
 *.nuspec
 
 # VS Code
-.vscode/
+
 !.vscode/extensions.json
 
 # Rider
