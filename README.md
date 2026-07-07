@@ -112,27 +112,38 @@ tests/
 .github/
   copilot-instructions.md     # Repo-wide Copilot custom instructions
   workflows/ci.yml            # GitHub Actions CI (build + test)
-  workflows/azure-static-web-apps.yml  # Deploy front end + API to Azure SWA
+  workflows/deploy.yml        # Provision Azure infra (Bicep) + deploy app
   dependabot.yml              # Automated dependency updates
   ISSUE_TEMPLATE/             # Bug report and feature request templates
+infra/
+  main.bicep                  # Subscription-scoped: resource group + module
+  resources.bicep             # Log Analytics, App Insights, Static Web App
+  main.bicepparam             # Deployment parameters
 ```
 
-## Deployment (Azure Static Web Apps)
+## Deployment (Azure)
 
-The front end and the Azure Functions API deploy together to **Azure Static Web Apps**
-via GitHub Actions ([.github/workflows/azure-static-web-apps.yml](.github/workflows/azure-static-web-apps.yml)).
+Infrastructure and app deploy together from a single GitHub Actions pipeline
+([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) on every push to `master`
+(or via manual `workflow_dispatch`). The pipeline:
 
-1. Create a **Static Web App** resource in Azure (Free tier is fine for the demo),
-   choosing this GitHub repository as the source.
-2. In the resource, set **App location** to `frontend` and **Api location** to
-   `src/TaskManager.Api`.
-3. Azure adds an `AZURE_STATIC_WEB_APPS_API_TOKEN` secret to the repository; the
-   workflow uses it to publish on every push to `main` and to create preview
-   environments for pull requests.
+1. **Authenticates to Azure with OIDC** — no stored credentials, only the
+   `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_SUBSCRIPTION_ID` references.
+2. **Provisions infrastructure** with Bicep (`az deployment sub create` against
+   [infra/main.bicep](infra/main.bicep)) — resource group, Log Analytics,
+   Application Insights, and the Static Web App.
+3. **Deploys the front end + Functions API** to the Static Web App using the
+   deployment token retrieved at runtime.
 
 Routing is controlled by [frontend/staticwebapp.config.json](frontend/staticwebapp.config.json):
 calls to `/api/*` are served by the Functions backend, and unmatched routes fall back
 to `index.html`.
+
+### One-time Azure trust setup
+
+The pipeline uses a federated (OIDC) app registration with **Contributor** on the
+subscription. The GitHub secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and
+`AZURE_SUBSCRIPTION_ID` point the workflow at that identity.
 
 ## GitHub AI Features Demonstrated
 
