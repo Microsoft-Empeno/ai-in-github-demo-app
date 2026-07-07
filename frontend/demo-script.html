@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Talking Points</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <span class="nav__brand">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4.5 7.75a.75.75 0 011.28-.53l1.47 1.47 3.47-3.47a.75.75 0 111.06 1.06l-4 4a.75.75 0 01-1.06 0l-2-2a.75.75 0 01-.22-.53z" />
+        </svg>
+        Task Manager API
+      </span>
+      <div class="nav__links">
+        <a class="nav__link" href="/index.html">Tasks</a>
+        <a class="nav__link" href="/ai-features.html">GitHub AI Features</a>
+        <a class="nav__link is-active" href="/demo-script.html">Demo Script</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <header class="hero">
+        <h1>Demo Talking Points</h1>
+        <p>A quick checklist of what to show — and what to say — when presenting this project.</p>
+      </header>
+
+      <section class="card">
+        <h2 class="section-title">Set the scene</h2>
+        <ul>
+          <li>Introduce the app: a small .NET 10 Azure Functions REST API for managing tasks.</li>
+          <li>Explain the goal: showcase GitHub's AI and security features end to end.</li>
+          <li>Note the stack: Azure Functions (isolated worker) + Static Web Apps, deployed via Bicep and GitHub Actions.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Copilot in the editor</h2>
+        <ul>
+          <li>Show code completions while adding a function or test.</li>
+          <li>Use Copilot Chat to explain a file and generate a unit test.</li>
+          <li>Demonstrate Agent Mode completing a multi-step change across files.</li>
+          <li>Point out <code>copilot-instructions.md</code> steering Copilot to the repo's conventions.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Copilot on GitHub.com</h2>
+        <ul>
+          <li>Open a pull request and let Copilot Code Review comment automatically.</li>
+          <li>Assign an issue to the Copilot Coding Agent and watch it open a PR.</li>
+          <li>Show a Dependabot update PR and how it's triaged.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Security &amp; insights</h2>
+        <ul>
+          <li>Highlight CodeQL code scanning with Copilot Autofix suggestions.</li>
+          <li>Show secret scanning and push protection blocking leaked credentials.</li>
+          <li>Tour the repository Insights: community standards, traffic, and contributors.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Wrap up</h2>
+        <ul>
+          <li>Recap how AI touched every stage: code, tests, review, security, and deployment.</li>
+          <li>Invite questions and share where to learn more.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
